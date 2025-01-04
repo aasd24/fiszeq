@@ -6,7 +6,7 @@ Ta aplikacja jest obecnie intensywnie rozwijana, wiecej informacji i funkcji zos
 
 # Instalacja
 
-Fiszeq jest aplikacją webową, która jest dostępna [tutaj](https://aasd24.github.io/fiszeq).
+Fiszeq jest dostępny [tutaj](https://aasd24.github.io/fiszeq).
 
 # Development
 

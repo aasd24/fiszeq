@@ -1,5 +1,7 @@
 ![Fiszeq](src/assets/banner.png)
 
+[Wersja Polska 🇵🇱](https://github.com/aasd24/fiszeq/blob/main/README-pl.md)
+
 # Fiszeq
 
 Fiszeq is a web application helping you learn by utilizing flashcards.
@@ -8,7 +10,7 @@ This application is currently under heavy development, more information and feat
 
 # Installation
 
-Fiszeq is a web application, which means that you can access it [here](https://aasd24.github.io/fiszeq).
+Fiszeq is available [here](https://aasd24.github.io/fiszeq).
 
 # Development
 
