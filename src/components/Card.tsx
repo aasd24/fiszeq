@@ -54,6 +54,37 @@ export default function Card({front, back}: CardProps) {
   )
 }
 
+const sharedVariants = {
+    initial: {
+        opacity: 0,
+        scale: 0,
+        rotateZ: '120deg',
+        transition: {
+            type: 'spring',
+        }
+    },
+
+    animate: {
+        opacity: 1,
+        scale: 1,
+        rotateZ: '0deg',
+        transition: {
+            type: 'spring',
+            duration: 0.8,
+            bounce: 0.3,
+        }
+    },
+
+    exit: {
+        opacity: 0,
+        scale: 0,
+        rotateZ: '-120deg',
+        transition: {
+            ease: "easeInOut"
+        }
+    }
+}
+
 function CardSide({text, isBackSide}: CardSideProps) {
     const state = useContext(StateContext);
     if (!state) return (undefined); 
@@ -63,36 +94,17 @@ function CardSide({text, isBackSide}: CardSideProps) {
 
     const variants = {
         initial: {
-            opacity: 0,
-            scale: 0,
-            rotateZ: '120deg',
+            ...sharedVariants.initial,
             rotateY: `${isBackSide ? 180 : 0}deg`,
-            transition: {
-                type: 'spring',
-            }
         },
 
         animate: {
-            opacity: 1,
-            scale: 1,
-            rotateZ: '0deg',
+            ...sharedVariants.animate,
             rotateY: `${(isBackSide ? 180 : 0) + xOffset.get()}deg`,
             y: `${positionOffset.get()}px`,
-            transition: {
-                type: 'spring',
-                duration: 0.8,
-                bounce: 0.3,
-            }
         },
 
-        exit: {
-            opacity: 0,
-            scale: 0,
-            rotateZ: '-120deg',
-            transition: {
-                ease: "easeInOut"
-            }
-        }
+        exit: sharedVariants.exit,
     }
 
     return (
@@ -116,37 +128,16 @@ function CardShadow() {
     const positionOffset = state.verticalOffset;
 
     const variants = {
-        initial: {
-            opacity: 0,
-            scale: 0,
-            rotateZ: '120deg',
-            transition: {
-                type: 'spring',
-            }
-        },
+        initial: sharedVariants.initial,
 
         animate: {
-            opacity: 1,
-            scale: 1,
-            rotateZ: '0deg',
+            ...sharedVariants.animate,
             rotateY: `${xOffset.get()}deg`,
             x: `${-positionOffset.get() + 25}px`,
             y: `${-positionOffset.get() + 25}px`,
-            transition: {
-                type: 'spring',
-                duration: 0.8,
-                bounce: 0.3,
-            }
         },
 
-        exit: {
-            opacity: 0,
-            scale: 0,
-            rotateZ: '-120deg',
-            transition: {
-                ease: "easeInOut"
-            }
-        }
+        exit: sharedVariants.exit,
     }
 
     return (
