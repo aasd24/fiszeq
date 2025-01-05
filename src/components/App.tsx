@@ -1,15 +1,23 @@
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Card from "./Card";
+import { useState } from "react";
 
 function App() {
+    const [visible, setVisible] = useState(true);
+
     return (
     <motion.div 
     style={body} 
     initial={{backgroundPosition: '0px 0px'}} 
     animate={{backgroundPosition: '25px 25px'}} 
     transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
-    >
-        <Card front="elephant" back="🐘" />
+    >   
+        <AnimatePresence>
+            {visible && (<Card key={crypto.randomUUID()} front="elephant" back="🐘" />)}
+        </AnimatePresence>
+        <button onClick={() => setVisible(!visible)}>
+            {visible ? "Hide": "Show"}
+        </button>
     </motion.div>
     )
 }

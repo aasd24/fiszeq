@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, useMotionValue} from 'motion/react'
 import { MotionValue } from 'framer-motion';
 import preventTextSelect from '../styles/preventSelect.ts';
@@ -75,22 +75,55 @@ function CardSide({
     positionOffset, 
     isBackSide
 }: CardSideProps) {
+    const variants = {
+        initial: {
+            opacity: 0,
+            scale: 0,
+            rotateZ: '120deg',
+            rotateY: `${isBackSide ? 180 : 0}deg`,
+            transition: {
+                type: 'spring',
+            }
+        },
+
+        animate: {
+            opacity: 1,
+            scale: 1,
+            rotateZ: '0deg',
+            rotateY: `${(isBackSide ? 180 : 0) + xOffset.get()}deg`,
+            y: `${positionOffset.get()}px`,
+            transition: {
+                type: 'spring',
+                duration: 0.8,
+                bounce: 0.3,
+            }
+        },
+
+        exit: {
+            opacity: 0,
+            scale: 0,
+            rotateZ: '-120deg',
+            transition: {
+                ease: "easeInOut"
+            }
+        }
+    }
+
+    useEffect(() => {
+        console.log("Mounted.")
+        return () => console.log("Unmounted.")
+    }, [])
+
     return (
         <motion.div
-        transition={{
-            type: 'spring',
-            duration: 0.6,
-            bounce: 0.2,
-        }}
         style={button}
-        initial={{rotateY: `${(isBackSide ? 180 : 0)}deg`}}
-        animate={{
-            rotateY: `${(isBackSide ? 180 : 0) + xOffset.get()}deg`,//`${rotation + y}deg`,
-            y: `${positionOffset.get()}px`,
-        }}
-        >
+        variants={variants}
+        initial={"initial"}
+        animate={"animate"}
+        exit={"exit"}>
             {text}
         </motion.div>
+        
     )
 }
 
@@ -98,19 +131,47 @@ function CardShadow({
     xOffset, 
     positionOffset,
 }: CardShadowProps) {
+    const variants = {
+        initial: {
+            opacity: 0,
+            scale: 0,
+            rotateZ: '120deg',
+            transition: {
+                type: 'spring',
+            }
+        },
+
+        animate: {
+            opacity: 1,
+            scale: 1,
+            rotateZ: '0deg',
+            rotateY: `${xOffset.get()}deg`,
+            x: `${-positionOffset.get() + 25}px`,
+            y: `${-positionOffset.get() + 25}px`,
+            transition: {
+                type: 'spring',
+                duration: 0.8,
+                bounce: 0.3,
+            }
+        },
+
+        exit: {
+            opacity: 0,
+            scale: 0,
+            rotateZ: '-120deg',
+            transition: {
+                ease: "easeInOut"
+            }
+        }
+    }
+
     return (
         <motion.div
-        transition={{
-            type: 'spring',
-            duration: 0.6,
-            bounce: 0.2,
-        }}
         style={buttonShadow}
-        animate={{
-            rotateY: `${xOffset.get()}deg`,//`${rotation + y}deg`,
-            x: `${-positionOffset.get() + 25}px`,
-            y: `${-positionOffset.get() + 25}px`
-        }}
+        variants={variants}
+        initial={"initial"}
+        animate={"animate"}
+        exit={"exit"}
         >
 
         </motion.div>
