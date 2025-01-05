@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { motion, useMotionValue} from 'motion/react'
 import { MotionValue } from 'framer-motion';
 import preventTextSelect from '../styles/preventSelect.ts';
@@ -11,15 +11,10 @@ export interface CardProps {
 
 export interface CardSideProps {
     text: string;
-    xOffset: MotionValue<number>;
-    positionOffset: MotionValue<number>;
     isBackSide?: boolean;
 }
 
-export interface CardShadowProps {
-    xOffset: MotionValue<number>;
-    positionOffset: MotionValue<number>;
-}
+const StateContext = createContext<{flipOffset: MotionValue<number>, verticalOffset: MotionValue<number>} | undefined>(undefined)
 
 export default function Card({front, back}: CardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -39,7 +34,6 @@ export default function Card({front, back}: CardProps) {
     }
 
     return (
-        <>
         <div>
             <button 
             style={container} 
@@ -47,34 +41,26 @@ export default function Card({front, back}: CardProps) {
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)}
             >
-               <CardSide 
-               text={front} 
-               xOffset={flipOffset} 
-               positionOffset={verticalOffset}
-               />
 
-               <CardSide 
-               text={back} 
-               xOffset={flipOffset} 
-               positionOffset={verticalOffset} 
-               isBackSide />
+            <StateContext.Provider value={{flipOffset, verticalOffset}}>
+                <CardSide text={front} />
+                <CardSide text={back} isBackSide />
 
-               <CardShadow 
-               xOffset={flipOffset} 
-               positionOffset={verticalOffset} 
-               />
+                <CardShadow />
+            </StateContext.Provider>
+
             </button>
         </div>
-        </>
   )
 }
 
-function CardSide({
-    text, 
-    xOffset, 
-    positionOffset, 
-    isBackSide
-}: CardSideProps) {
+function CardSide({text, isBackSide}: CardSideProps) {
+    const state = useContext(StateContext);
+    if (!state) return (undefined); 
+
+    const xOffset = state.flipOffset;
+    const positionOffset = state.verticalOffset;
+
     const variants = {
         initial: {
             opacity: 0,
@@ -109,11 +95,6 @@ function CardSide({
         }
     }
 
-    useEffect(() => {
-        console.log("Mounted.")
-        return () => console.log("Unmounted.")
-    }, [])
-
     return (
         <motion.div
         style={button}
@@ -127,10 +108,13 @@ function CardSide({
     )
 }
 
-function CardShadow({
-    xOffset, 
-    positionOffset,
-}: CardShadowProps) {
+function CardShadow() {
+    const state = useContext(StateContext);
+    if (!state) return (undefined); 
+
+    const xOffset = state.flipOffset;
+    const positionOffset = state.verticalOffset;
+
     const variants = {
         initial: {
             opacity: 0,
@@ -172,9 +156,7 @@ function CardShadow({
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}
-        >
-
-        </motion.div>
+        ></motion.div>
     )
 }
 
