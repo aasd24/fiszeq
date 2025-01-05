@@ -154,6 +154,7 @@ function CardShadow() {
 // Styles
 
 const container: React.CSSProperties = {
+    position: 'absolute',
     display: 'grid',
     placeItems: 'center',
     backgroundColor: 'transparent',
@@ -182,6 +183,7 @@ const button: React.CSSProperties = {
 }
 
 const buttonShadow: React.CSSProperties = {
+    position: 'absolute',
     width: '400px',
     padding: '15px',
     borderRadius: '15px',

@@ -14,7 +14,7 @@ Fiszeq is available [here](https://aasd24.github.io/fiszeq).
 
 # Development
 
-Fiszeq works best on the last version of [Node.js](https://nodejs.org/) (v22.11.0).
+Fiszeq works best on the latest version of [Node.js](https://nodejs.org/) (v22.11.0).
 
 Install the dependencies and devDependencies and start the local development server.
 
