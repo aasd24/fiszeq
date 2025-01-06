@@ -4,19 +4,20 @@ import { MotionValue } from 'framer-motion';
 import preventTextSelect from '../styles/preventSelect.ts';
 import { font } from '../styles/font.ts';
 
-export interface CardProps {
+export interface ICardProps {
     front: string;
     back: string;
+    flipCallback?: () => void;
 }
 
-export interface CardSideProps {
+export interface ICardSideProps {
     text: string;
     isBackSide?: boolean;
 }
 
 const StateContext = createContext<{flipOffset: MotionValue<number>, verticalOffset: MotionValue<number>} | undefined>(undefined)
 
-export default function Card({front, back}: CardProps) {
+export default function Card({front, back, flipCallback}: ICardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
 
@@ -24,6 +25,7 @@ export default function Card({front, back}: CardProps) {
     const verticalOffset = useMotionValue(0);
 
     function handleClick() {
+        if (flipCallback) flipCallback();
         setIsFlipped(!isFlipped)
         flipOffset.set(isFlipped ? 0 : 180)
     }
@@ -85,7 +87,7 @@ const sharedVariants = {
     }
 }
 
-function CardSide({text, isBackSide}: CardSideProps) {
+function CardSide({text, isBackSide}: ICardSideProps) {
     const state = useContext(StateContext);
     if (!state) return (undefined); 
 

@@ -1,79 +1,129 @@
 import { AnimatePresence, motion } from "motion/react";
 import Card from "./Card";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import shuffle from "../utils/shuffle";
+import CardChoices from "./CardChoice";
 
 // temporary, remove and improve later
 const cards = [
     {   
         id: crypto.randomUUID(),
-        front: "elephant",
-        back: "🐘",
+        front: "🐘",
+        back: "elephant",
     },
     {
         id: crypto.randomUUID(),
-        front: "giraffe",
-        back: "🦒",
+        front: "🦒",
+        back: "giraffe",
     },
     {
         id: crypto.randomUUID(),
-        front: "parrot",
-        back: "🦜",
+        front: "🦜",
+        back: "parrot",
     },
     {
         id: crypto.randomUUID(),
-        front: "cat",
-        back: "🐱",
+        front: "🐱",
+        back: "cat",
     },
     {
         id: crypto.randomUUID(),
-        front: "dog",
-        back: "🐶",
+        front: "🐶",
+        back: "dog",
+    },
+    {
+        id: crypto.randomUUID(),
+        front: "🐭",
+        back: "mouse",
+    },
+    {
+        id: crypto.randomUUID(),
+        front: "🦑",
+        back: "squid",
+    },
+    {
+        id: crypto.randomUUID(),
+        front: "🦛",
+        back: "hippo",
+    },
+    {
+        id: crypto.randomUUID(),
+        front: "🐷",
+        back: "pig",
+    },
+    {
+        id: crypto.randomUUID(),
+        front: "🐀",
+        back: "rat",
     },
     
 ]
 
-interface CardType {
-    id: `${string}-${string}-${string}-${string}-${string}`, 
-    front: string, 
-    back: string
-}
+export type TCardChoices = "Bad" | "Decent" | "Good";
 
 function App() {
-    const list = useRef(shuffle(cards));
-    const [currentCard, setCurrentCard] = useState<CardType | undefined>(undefined);
+    const [cardList, setCardList] = useState(shuffle(cards));
+    const [showChoices, setShowChoices] = useState(false);
 
-    useEffect(() => {
-        function setRandomCard() {
-            setCurrentCard(list.current[Math.floor(Math.random() * list.current.length)]);
+    // TODO, improve shifting based on total card score.
+    function changeCard(optionChosen: TCardChoices): void {
+        setShowChoices(false);
+
+        if (!cardList) return;
+        if (cardList.length === 0) return;
+
+        const newCardList = cardList.slice(); // shallow copy
+        const card = newCardList.shift(); // first index removed
+
+        if (!card) return;
+
+        if (optionChosen === "Bad") {
+            if (newCardList.length >= 2) {
+                newCardList.splice(2, 0, card); 
+            } else {
+                newCardList.push(card);
+            }
+        } 
+
+        if (optionChosen === "Decent") {
+            newCardList.push(card);
         }
 
-        const id = setInterval(() => {
-            setRandomCard();
-        }, 15000)
+        // no option for good, first element already removed.
+        
+        setCardList(newCardList);
+    }
 
-        setRandomCard();
-
-        return () => clearInterval(id);
-    }, [])
+    function onFlip() {
+        setTimeout(() => {
+            if (!showChoices) {
+                setShowChoices(true);
+            }
+        }, 500)
+        
+    }
 
     return (
     <motion.div 
-    style={body} 
-    initial={{backgroundPosition: '0px 0px'}} 
-    animate={{backgroundPosition: '25px 25px'}} 
-    transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
-    >   
+        style={body} 
+        initial={{backgroundPosition: '0px 0px'}} 
+        animate={{backgroundPosition: '25px 25px'}} 
+        transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
+        >   
         
-        <div style={cardContainer}>
-        <AnimatePresence>
-            {list.current.map((card: CardType) => {
-                return (currentCard && card.id === currentCard.id && <Card key={card.id} front={card.front} back={card.back} />);
-            })}
-        </AnimatePresence>
-        </div>
+        <motion.div style={container} animate={{y: `${showChoices ? -200 : 0}px`}}>
+            <AnimatePresence>
+                {cardList.length !== 0 && 
+                <Card 
+                key={cardList[0].id} 
+                front={cardList[0].front} 
+                back={cardList[0].back} 
+                flipCallback={onFlip} />}
+                {showChoices && <CardChoices choiceCallback={changeCard}/>}
+           </AnimatePresence>
+           </motion.div>
         
-    </motion.div>
+        </motion.div>
     )
 }
 
@@ -90,8 +140,7 @@ const body: React.CSSProperties = {
     zIndex: -100,
 }
 
-const cardContainer: React.CSSProperties = {
+const container: React.CSSProperties = {
     position: 'relative',
     top: '50%',
-    transform: 'translate(0, -50%)'
 }
