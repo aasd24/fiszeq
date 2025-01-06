@@ -1,97 +1,56 @@
 import { AnimatePresence, motion } from "motion/react";
 import Card from "./Card";
-import { useState } from "react";
-import shuffle from "../utils/shuffle";
+import { useEffect, useState } from "react";
+import shuffle from "../../utils/shuffle";
 import CardChoices from "./CardChoice";
-
-// temporary, remove and improve later
-const cards = [
-    {   
-        id: crypto.randomUUID(),
-        front: "🐘",
-        back: "elephant",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🦒",
-        back: "giraffe",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🦜",
-        back: "parrot",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🐱",
-        back: "cat",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🐶",
-        back: "dog",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🐭",
-        back: "mouse",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🦑",
-        back: "squid",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🦛",
-        back: "hippo",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🐷",
-        back: "pig",
-    },
-    {
-        id: crypto.randomUUID(),
-        front: "🐀",
-        back: "rat",
-    },
-    
-]
+import { useNavigate, useParams } from "react-router";
+import decks from "../../impl";
 
 export type TCardChoices = "Bad" | "Decent" | "Good";
 
-function App() {
-    const [cardList, setCardList] = useState(shuffle(cards));
+function Play() {
+    const params = useParams();
+    const navigate = useNavigate();
+
+    const deckName = params.deck as keyof typeof decks;
+
+    const [deck, setDeck] = useState(() => {
+        if (deckName && (deckName in decks)) {
+            return shuffle(decks[deckName].data);
+        }
+
+        return [];
+    });
+
     const [showChoices, setShowChoices] = useState(false);
 
     // TODO, improve shifting based on total card score.
     function changeCard(optionChosen: TCardChoices): void {
         setShowChoices(false);
 
-        if (!cardList) return;
-        if (cardList.length === 0) return;
+        if (!deck) return;
+        if (deck.length === 0) return;
 
-        const newCardList = cardList.slice(); // shallow copy
-        const card = newCardList.shift(); // first index removed
+        const newDeck = deck.slice(); // shallow copy
+        const card = newDeck.shift(); // first index removed
 
         if (!card) return;
 
         if (optionChosen === "Bad") {
-            if (newCardList.length >= 2) {
-                newCardList.splice(2, 0, card); 
+            if (newDeck.length >= 2) {
+                newDeck.splice(2, 0, card); 
             } else {
-                newCardList.push(card);
+                newDeck.push(card);
             }
         } 
 
         if (optionChosen === "Decent") {
-            newCardList.push(card);
+            newDeck.push(card);
         }
 
         // no option for good, first element already removed.
         
-        setCardList(newCardList);
+        setDeck(newDeck);
     }
 
     function onFlip() {
@@ -103,6 +62,21 @@ function App() {
         
     }
 
+    useEffect(() => {
+        if (!deckName || !(deckName in decks)) {
+            navigate("/");
+        }
+    })
+
+    useEffect(() => {
+        if (deck.length === 0) {
+            setTimeout(() => {
+                navigate("/");
+            }, 500)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [deck])
+
     return (
     <motion.div 
         style={body} 
@@ -113,11 +87,11 @@ function App() {
         
         <motion.div style={container} animate={{y: `${showChoices ? -200 : 0}px`}}>
             <AnimatePresence>
-                {cardList.length !== 0 && 
+                {deck.length !== 0 && 
                 <Card 
-                key={cardList[0].id} 
-                front={cardList[0].front} 
-                back={cardList[0].back} 
+                key={deck[0]!.id} 
+                front={deck[0].front} 
+                back={deck[0].back} 
                 flipCallback={onFlip} />}
                 {showChoices && <CardChoices choiceCallback={changeCard}/>}
            </AnimatePresence>
@@ -127,7 +101,7 @@ function App() {
     )
 }
 
-export default App;
+export default Play;
 
 const body: React.CSSProperties = {
     backgroundColor: '#111111',

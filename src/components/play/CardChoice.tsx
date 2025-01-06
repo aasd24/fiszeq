@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { TCardChoices } from "./App"
+import { TCardChoices } from "./Play"
 
 const choicesArray: Array<TCardChoices> = ["Bad", "Decent", "Good"];
 
@@ -93,8 +93,8 @@ function Pick({id, choice, choose}: IPickProps) {
                 preserveAspectRatio={"xMidYMid meet"}
                 viewBox={"0 0 24 24"}>
                     <g 
-                   fill-rule={"evenodd"}
-                   clip-rule={"evenodd"}
+                   fillRule={"evenodd"}
+                   clipRule={"evenodd"}
                    fill={`${pickCardStyles[choice].fromColor}`}
                    >
                        <path d={pickCardStyles[choice].svgIcon} />

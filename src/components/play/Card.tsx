@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 import { motion, useMotionValue} from 'motion/react'
 import { MotionValue } from 'framer-motion';
-import preventTextSelect from '../styles/preventSelect.ts';
-import { font } from '../styles/font.ts';
+import preventTextSelect from '../../styles/preventSelect.ts';
+import { font } from '../../styles/font.ts';
 
 export interface ICardProps {
     front: string;
