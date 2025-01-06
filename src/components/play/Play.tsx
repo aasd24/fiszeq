@@ -79,31 +79,36 @@ function Play() {
 
     return (
     <motion.div 
-        style={body} 
-        initial={{backgroundPosition: '0px 0px'}} 
-        animate={{backgroundPosition: '25px 25px'}} 
-        transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
-        >   
-        
-        <motion.div style={container} animate={{y: `${showChoices ? -200 : 0}px`}}>
-            <AnimatePresence>
-                {deck.length !== 0 && 
-                <Card 
-                key={deck[0]!.id} 
-                front={deck[0].front} 
-                back={deck[0].back} 
-                flipCallback={onFlip} />}
-                {showChoices && <CardChoices choiceCallback={changeCard}/>}
-           </AnimatePresence>
-           </motion.div>
-        
+    style={body} 
+    initial={{backgroundPosition: '0px 0px'}} 
+    animate={{backgroundPosition: '25px 25px'}} 
+    transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
+    >   
+        <motion.div 
+        style={{...body, backgroundImage: 'none'}} 
+        initial={{backgroundColor: '#111111'}} 
+        animate={{backgroundColor: '#11111100'}} 
+        transition={{duration: 3}}>
+            <motion.div style={container} animate={{y: `${showChoices ? -200 : 0}px`}}>
+                <AnimatePresence>
+                    {deck.length !== 0 && 
+                    <Card 
+                    key={deck[0]!.id} 
+                    front={deck[0].front} 
+                    back={deck[0].back} 
+                    flipCallback={onFlip} />}
+                    {showChoices && <CardChoices choiceCallback={changeCard}/>}
+                </AnimatePresence>
+            </motion.div>
         </motion.div>
+    </motion.div>
     )
 }
 
 export default Play;
 
 const body: React.CSSProperties = {
+    position: 'fixed',
     backgroundColor: '#111111',
     backgroundImage: 'radial-gradient(#181818 10%, transparent 15%)',
     backgroundSize: '25px 25px',
