@@ -9,7 +9,7 @@ import decks from "../../impl";
 export type TCardChoices = "Bad" | "Decent" | "Good";
 
 function Play() {
-    const params = useParams();
+    const params = useParams<{deck: string}>();
     const navigate = useNavigate();
 
     const deckName = params.deck as keyof typeof decks;
@@ -64,14 +64,14 @@ function Play() {
 
     useEffect(() => {
         if (!deckName || !(deckName in decks)) {
-            navigate("/");
+            navigate("/view", { replace: true });
         }
     })
 
     useEffect(() => {
         if (deck.length === 0) {
             setTimeout(() => {
-                navigate("/");
+                navigate("/view", { replace: true });
             }, 500)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps

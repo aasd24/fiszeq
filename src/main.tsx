@@ -1,15 +1,39 @@
+import './index.css'
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import Play from './components/play/Play.tsx'
 import { createHashRouter, Navigate, RouterProvider } from 'react-router'
+
+import Play from './components/play/Play.tsx'
 import Root from './components/root/Root.tsx'
+import View from './components/root/view/View.tsx'
+import Home from './components/root/home/Home.tsx'
+import Edit from './components/root/edit/Edit.tsx'
+import Library from './components/root/library/Library.tsx'
 
 const router = createHashRouter([
     {
         path: "/",
         element: <Root />,
-        errorElement: <Navigate to={"/"}/> // temporary
+        errorElement: <Navigate to={"/"}/>, // temporary
+        children: [
+            {
+                path: "/",
+                element: <Home />
+            },
+            {
+                path: "/view",
+                element: <View />
+            },
+            {
+                path: "/edit",
+                element: <Edit />,
+            },
+            {
+                path: "/library",
+                element: <Library />
+            }
+        ]
     },
     {
         path: "/play/:deck",
