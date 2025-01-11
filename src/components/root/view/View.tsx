@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import decks from "../../../impl";
+import { font } from "../../../styles/font";
 
 export default function View() {
     return (
@@ -31,10 +32,13 @@ const innerContainer: React.CSSProperties = {
     flexDirection: 'column',
     gap: '20%',
     padding: '15px',
-    backgroundColor: '#eeeeee',
-    borderRadius: '15px',
+    backgroundColor: '#38383820',
+    ...font,
+    fontSize: '1.5rem',
+    color: '#bbbbbb',
+    border: '1px solid #73737350',
+    borderRadius: '5px',
     textAlign: 'center',
     textDecoration: 'none',
-    color: '#000000',
     filter: 'drop-shadow(10px 10px 4px #00000025)'
 }

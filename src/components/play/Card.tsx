@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState } from 'react'
 import { motion, useMotionValue} from 'motion/react'
 import { MotionValue } from 'framer-motion';
 import preventTextSelect from '../../styles/preventSelect.ts';
-import { font } from '../../styles/font.ts';
 
 export interface ICardProps {
     front: string;
@@ -169,7 +168,8 @@ const button: React.CSSProperties = {
     position: 'absolute',
     display: 'grid',
     placeItems: 'center',
-    ...font,
+    fontFamily: `"Balsamiq Sans", serif`,
+    fontOpticalSizing: 'auto',
     fontWeight: 400,
     fontSize: '4rem',
     padding: '15px',
