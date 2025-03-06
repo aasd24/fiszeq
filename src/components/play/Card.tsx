@@ -14,7 +14,12 @@ export interface ICardSideProps {
     isBackSide?: boolean;
 }
 
-const StateContext = createContext<{flipOffset: MotionValue<number>, verticalOffset: MotionValue<number>} | undefined>(undefined)
+const StateContext = createContext<
+    {
+    flipOffset: MotionValue<number>, 
+    verticalOffset: MotionValue<number>
+    } 
+    | undefined>(undefined)
 
 export default function Card({front, back, flipCallback}: ICardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -46,8 +51,6 @@ export default function Card({front, back, flipCallback}: ICardProps) {
             <StateContext.Provider value={{flipOffset, verticalOffset}}>
                 <CardSide text={front} />
                 <CardSide text={back} isBackSide />
-
-                <CardShadow />
             </StateContext.Provider>
 
             </button>
@@ -121,37 +124,6 @@ function CardSide({text, isBackSide}: ICardSideProps) {
     )
 }
 
-function CardShadow() {
-    const state = useContext(StateContext);
-    if (!state) return (undefined); 
-
-    const xOffset = state.flipOffset;
-    const positionOffset = state.verticalOffset;
-
-    const variants = {
-        initial: sharedVariants.initial,
-
-        animate: {
-            ...sharedVariants.animate,
-            rotateY: `${xOffset.get()}deg`,
-            x: `${-positionOffset.get() + 25}px`,
-            y: `${-positionOffset.get() + 25}px`,
-        },
-
-        exit: sharedVariants.exit,
-    }
-
-    return (
-        <motion.div
-        style={buttonShadow}
-        variants={variants}
-        initial={"initial"}
-        animate={"animate"}
-        exit={"exit"}
-        ></motion.div>
-    )
-}
-
 // Styles
 
 const container: React.CSSProperties = {
@@ -182,14 +154,5 @@ const button: React.CSSProperties = {
     backfaceVisibility: 'hidden',
     ...preventTextSelect,
     zIndex: 1,
-}
-
-const buttonShadow: React.CSSProperties = {
-    position: 'absolute',
-    width: '400px',
-    padding: '15px',
-    borderRadius: '15px',
-    aspectRatio: 1.618,
-    backgroundColor: '#00000080',
-    filter: 'blur(10px)',
+    filter: 'drop-shadow(12px 12px 12px #000000)'
 }
