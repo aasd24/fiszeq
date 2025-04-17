@@ -1,4 +1,4 @@
-![Fiszeq](src/assets/banner.png)
+![Fiszeq](public/banner.png)
 
 Fiszeq to aplikacja webowa pomagajacą się uczyć za pomocą fiszek.
 

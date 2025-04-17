@@ -1,4 +1,4 @@
-![Fiszeq](src/assets/banner.png)
+![Fiszeq](public/banner.png)
 
 [Wersja Polska 🇵🇱](https://github.com/aasd24/fiszeq/blob/main/README-pl.md)
 
