@@ -2,6 +2,8 @@ import { Outlet } from "react-router"
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
+console.log(process.env.NODE_ENV);
+
 export default function Root() {
     return (
         <div style={container}>
