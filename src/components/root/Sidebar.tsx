@@ -23,7 +23,7 @@ export default function Sidebar() {
     return (
         <div style={sidebar}>
             <div style={logo}>
-                <img height={"50px"} src={"/fiszeq/logo.png"} /> 
+                <img height={"50px"} src={"/logo.png"} /> 
                 fiszeq
             </div>
         </div>
