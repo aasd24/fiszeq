@@ -5,6 +5,7 @@ import shuffle from "../../utils/shuffle";
 import CardChoices from "./CardChoice";
 import { useNavigate, useParams } from "react-router";
 import decks from "../../impl";
+import Exit from "./Exit";
 
 export type TCardChoices = "Bad" | "Decent" | "Good";
 
@@ -100,6 +101,7 @@ function Play() {
                     {showChoices && <CardChoices choiceCallback={changeCard}/>}
                 </AnimatePresence>
             </motion.div>
+            <Exit />
         </motion.div>
     </motion.div>
     )

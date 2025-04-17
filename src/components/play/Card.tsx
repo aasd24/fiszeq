@@ -113,14 +113,15 @@ function CardSide({text, isBackSide}: ICardSideProps) {
 
     return (
         <motion.div
-        style={button}
+        style={innerButton}
         variants={variants}
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}>
-            {text}
+            <div style={button}>
+                {text}
+            </div>
         </motion.div>
-        
     )
 }
 
@@ -136,6 +137,16 @@ const container: React.CSSProperties = {
     border: 0,
 }
 
+const innerButton: React.CSSProperties = {
+    position: 'absolute',
+    display: 'grid',
+    width: "600px",
+    aspectRatio: 1.618,
+    overflow: "hidden",
+    borderRadius: '15px',
+    filter: 'drop-shadow(12px 12px 12px #000000)'
+}
+
 const button: React.CSSProperties = {
     position: 'absolute',
     display: 'grid',
@@ -143,10 +154,11 @@ const button: React.CSSProperties = {
     fontFamily: `"Balsamiq Sans", serif`,
     fontOpticalSizing: 'auto',
     fontWeight: 400,
-    fontSize: '4rem',
-    padding: '15px',
-    width: '400px',
-    aspectRatio: 1.618,
+    fontSize: '3rem',
+    width: '100%',
+    height: '100%',
+    overflowY: "auto",
+    scrollbarWidth: 'thin',
     backgroundColor: '#f1f5f9',
     border: 0,
     borderRadius: '15px',
@@ -154,5 +166,4 @@ const button: React.CSSProperties = {
     backfaceVisibility: 'hidden',
     ...preventTextSelect,
     zIndex: 1,
-    filter: 'drop-shadow(12px 12px 12px #000000)'
 }
