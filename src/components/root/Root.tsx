@@ -31,7 +31,6 @@ const innerContainer: React.CSSProperties = {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: "#101010"
 }
 
 const contentContainer: React.CSSProperties = {
