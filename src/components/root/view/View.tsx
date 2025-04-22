@@ -7,7 +7,7 @@ export default function View() {
         <div style={container}>
             {Object.entries(decks).map(([key, deckData]) => {
                 return (
-                <Link key={key} to={`/play/${key}`} style={innerContainer}> 
+                <Link key={key} to={`/view/${key}`} style={innerContainer}> 
                     <div>{deckData.name} <span>by {deckData.author}</span></div>
                     <div>{deckData.description}</div>
                     <div>{deckData.data.length} Cards</div>
@@ -32,13 +32,13 @@ const innerContainer: React.CSSProperties = {
     flexDirection: 'column',
     gap: '20%',
     padding: '15px',
-    backgroundColor: '#38383820',
-    ...font,
+    backgroundColor: '#e9e9e9',
     fontSize: '1.5rem',
-    color: '#bbbbbb',
-    border: '1px solid #73737350',
+    color: '#404142',
+    border: '1px solid #cccccc',
+    boxShadow: '1px 1px 4px #00000010',
     borderRadius: '5px',
     textAlign: 'center',
     textDecoration: 'none',
-    filter: 'drop-shadow(10px 10px 4px #00000025)'
+    ...font,
 }

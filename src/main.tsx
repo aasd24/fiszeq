@@ -10,6 +10,7 @@ import View from './components/root/view/View.tsx'
 import Home from './components/root/home/Home.tsx'
 import Edit from './components/root/edit/Edit.tsx'
 import Library from './components/root/library/Library.tsx'
+import ViewDeck from './components/root/view/ViewDeck.tsx'
 
 const router = createHashRouter([
     {
@@ -23,7 +24,11 @@ const router = createHashRouter([
             },
             {
                 path: "/view",
-                element: <View />
+                element: <View />,
+            },
+            {
+                path: "/view/:deck",
+                element: <ViewDeck />
             },
             {
                 path: "/edit",

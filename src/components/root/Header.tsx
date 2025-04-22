@@ -1,5 +1,7 @@
-import { useLocation, Location, Link } from "react-router";
+import { Link } from "react-router";
 import { font } from "../../styles/font";
+import capitalize from "../../utils/capitalize";
+import usePath from "../../hooks/usePath";
 
 function Home() {
     return (
@@ -10,8 +12,7 @@ function Home() {
 }
 
 export default function Header() {
-    const location: Location = useLocation();
-    const path: Array<string> = location.pathname.slice(1, location.pathname.length).split("/");
+    const path = usePath();
     
     return (
         <div style={header}>
@@ -21,7 +22,7 @@ export default function Header() {
                 {path[0] !== "" && path.map((value) => ( // TODO: improve the condition
                     <>
                         <div>{">"}</div>
-                        <div>{value}</div>
+                        <div style={path[path.length - 1] === value ? {color: '#404142', fontSize: '125%'} : {}}>{capitalize(value)}</div>
                     </>
                 ))}
             </div>
@@ -49,8 +50,9 @@ const innerHeader: React.CSSProperties = {
     alignItems: 'center',
     padding: '0 10px',
     boxSizing: 'border-box',
-    backgroundColor: '#eeeeee',
-    border: '1px solid #dddddd',
+    backgroundColor: '#e9e9e9',
+    border: '1px solid #cccccc',
     borderRadius: '10px',
     ...font,
+    boxShadow: '1px 1px 4px #00000010',
 }

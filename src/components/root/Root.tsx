@@ -28,6 +28,7 @@ const container: React.CSSProperties = {
 }
 
 const innerContainer: React.CSSProperties = {
+    backgroundColor: "#f0f0f0",
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',

@@ -92,8 +92,9 @@ const button: React.CSSProperties = {
     border: 'none',
     cursor: 'pointer',
     borderRadius: '10px',
-    backgroundColor: '#212121', 
+    backgroundColor: '#21212180', 
     fontSize: '1.5rem',
+    boxShadow: '1px 1px 4px #00000010',
     ...font,
     ...preventTextSelect,
 }
